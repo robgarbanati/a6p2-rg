@@ -2,7 +2,8 @@ inherit core-image
 # Add aesd-assignments and openssh to this image's package list.
 # do_rootfs then pulls each named package's
 # already-built .ipk out of tmp/deploy/ipk/ and unpacks it into this image's own rootfs
-# (IMAGE_ROOTFS, under core-image-aesd's own WORKDIR -- not aesd-assignments' WORKDIR).
+# (IMAGE_ROOTFS, under core-image-aesd's own WORKDIR
+# (build/tmp/work/qemuarm64-poky-linux/core-image-aesd/1.0-r0/)).
 # The .ipk itself was built earlier, by aesd-assignments' own do_package task.
 CORE_IMAGE_EXTRA_INSTALL += "aesd-assignments openssh"
 inherit extrausers
