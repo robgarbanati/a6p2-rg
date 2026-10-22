@@ -19,6 +19,12 @@ S = "${WORKDIR}/git/server"
 # Our Makefile builds CC as $(CROSS_COMPILE)gcc rather than using the ${CC}
 # bitbake already exports, so CROSS_COMPILE must be exported explicitly here
 # (bitbake.conf only exports it for module-base/kernel recipes otherwise).
+# TARGET_PREFIX = "${TARGET_SYS}-", and TARGET_SYS = "${TARGET_ARCH}${TARGET_VENDOR}-${TARGET_OS}" — built from:
+# - TARGET_ARCH — e.g. aarch64 (derived from MACHINE/tune files, here cortexa57's tune → aarch64)
+# - TARGET_VENDOR — e.g. -poky
+# - TARGET_OS — e.g. linux
+#   Giving TARGET_SYS = "aarch64-poky-linux" and TARGET_PREFIX = "aarch64-poky-linux-"
+# we got cortx157 from build.sh setting CONFLINE="MACHINE = \"qemuarm64\""
 export CROSS_COMPILE = "${TARGET_PREFIX}"
 
 # TODO: Add the aesdsocket application and any other files you need to install
