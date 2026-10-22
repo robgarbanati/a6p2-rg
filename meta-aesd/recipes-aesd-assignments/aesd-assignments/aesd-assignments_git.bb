@@ -57,11 +57,11 @@ do_install () {
     install -d ${D}${sysconfdir}/rc5.d
     # make a symlink at build/tmp/work/aarch64-poky-linux/aesd-assignments/1.0+git<rev>/etc/rc5.d/s99aesdsocket with the contents '../init.d/aesdsocket'.
     # s99 prefix means init script starts this last
-    ln -sf ../init.d/aesdsocket ${D}{sysconfdir}/rc5.d/s99aesdsocket
+    ln -sf ../init.d/aesdsocket ${D}${sysconfdir}/rc5.d/s99aesdsocket
     # make build/tmp/work/aarch64-poky-linux/aesd-assignments/1.0+git<rev>/etc/rc0.d/
     install -d ${D}${sysconfdir}/rc0.d
     # make a symlink at build/tmp/work/aarch64-poky-linux/aesd-assignments/1.0+git<rev>/etc/rc5.d/K01aesdsocket with the contents '../init.d/aesdsocket'.
     # K01 prefix means exit script calls this with stop last
-    ln -sf ../init.d/aesdsocket ${D}{sysconfdir}/rc0.d/K01aesdsocket
+    ln -sf ../init.d/aesdsocket ${D}${sysconfdir}/rc0.d/K01aesdsocket
 
 }
