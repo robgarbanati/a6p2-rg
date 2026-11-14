@@ -5,7 +5,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 SRC_URI = "git://git@github.com/robgarbanati/a3p2-rg;protocol=ssh;branch=main"
 
 PV = "1.0+git${SRCPV}"
-SRCREV = "3f0cbd742231432aae44289813d9068f9b6fb125"
+SRCREV = "1ed3187a38665f10e080827457d08a7f782fe2c7"
 
 # This sets your staging directory based on WORKDIR, where WORKDIR is defined at 
 # https://docs.yoctoproject.org/ref-manual/variables.html?highlight=workdir#term-WORKDIR
@@ -26,7 +26,7 @@ do_configure () {
 }
 
 do_compile () {
-	oe_runmake CC="${CC}"
+	oe_runmake CC="${CC}" LDFLAGS="${LDFLAGS}"
 }
 
 do_install () {
@@ -54,7 +54,7 @@ do_install () {
     install -d ${D}${sysconfdir}/rc5.d
     # make a symlink at build/tmp/work/aarch64-poky-linux/aesd-assignments/1.0+git<rev>/etc/rc5.d/s99aesdsocket with the contents '../init.d/aesdsocket'.
     # s99 prefix means init script starts this last
-    ln -sf ../init.d/aesdsocket ${D}${sysconfdir}/rc5.d/s99aesdsocket
+    ln -sf ../init.d/aesdsocket ${D}${sysconfdir}/rc5.d/S99aesdsocket
     # make build/tmp/work/aarch64-poky-linux/aesd-assignments/1.0+git<rev>/etc/rc0.d/
     install -d ${D}${sysconfdir}/rc0.d
     # make a symlink at build/tmp/work/aarch64-poky-linux/aesd-assignments/1.0+git<rev>/etc/rc5.d/K01aesdsocket with the contents '../init.d/aesdsocket'.
