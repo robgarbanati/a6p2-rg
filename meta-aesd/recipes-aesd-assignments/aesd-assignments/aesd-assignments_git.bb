@@ -13,6 +13,11 @@ SRCREV = "1ed3187a38665f10e080827457d08a7f782fe2c7"
 # in your assignments repo
 S = "${WORKDIR}/git/server"
 
+inherit update-rc.d
+
+INITSCRIPT_NAME = "aesdsocket"
+INITSCRIPT_PARAMS = "defaults 99"
+
 # TODO: Add the aesdsocket application and any other files you need to install
 # See https://git.yoctoproject.org/poky/plain/meta/conf/bitbake.conf?h=kirkstone
 FILES:${PN} += "${bindir}/aesdsocket"
@@ -50,15 +55,8 @@ do_install () {
     # copy build/tmp/work/aarch64-poky-linux/aesd-assignments/1.0+git<rev>/git/server/aesdsocket-start-stop.sh to build/tmp/work/aarch64-poky-linux/aesd-assignments/1.0+git<rev>/image/etc/init.d/aesdsocket (renamed in copy)
     install -m 0755 ${S}/aesdsocket-start-stop.sh ${D}${sysconfdir}/init.d/aesdsocket
 
-    # make build/tmp/work/aarch64-poky-linux/aesd-assignments/1.0+git<rev>/etc/rc5.d/
-    install -d ${D}${sysconfdir}/rc5.d
-    # make a symlink at build/tmp/work/aarch64-poky-linux/aesd-assignments/1.0+git<rev>/etc/rc5.d/s99aesdsocket with the contents '../init.d/aesdsocket'.
-    # s99 prefix means init script starts this last
-    ln -sf ../init.d/aesdsocket ${D}${sysconfdir}/rc5.d/S99aesdsocket
-    # make build/tmp/work/aarch64-poky-linux/aesd-assignments/1.0+git<rev>/etc/rc0.d/
-    install -d ${D}${sysconfdir}/rc0.d
-    # make a symlink at build/tmp/work/aarch64-poky-linux/aesd-assignments/1.0+git<rev>/etc/rc5.d/K01aesdsocket with the contents '../init.d/aesdsocket'.
-    # K01 prefix means exit script calls this with stop last
-    ln -sf ../init.d/aesdsocket ${D}${sysconfdir}/rc0.d/K01aesdsocket
+    # rc*.d S99/K01 symlinks are created at rootfs/first-boot time by the
+    # inherited update-rc.d class (INITSCRIPT_NAME/INITSCRIPT_PARAMS above) —
+    # no need to create them manually here.
 
 }
